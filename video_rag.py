@@ -67,9 +67,6 @@ def user_input(user_question):
 def main():
     st.set_page_config("FreedomWithAI Bot")
     st.header("Chat with Me💁")
-#     image='''
-# '''
-#     st.markdown(image,unsafe_allow_html=True)
     # # user_question = st.text_input("Ask a Question")
     # st.write('Please upload the QR code')
     # # if user_question:
