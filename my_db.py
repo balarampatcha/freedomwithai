@@ -17,11 +17,11 @@ def get_vector_store(text_chunks):
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
-df=pd.read_excel('record.xlsx')
+df=pd.read_excel('masterclass1.xlsx')
 
-df['text']=df['text'].apply(lambda x: x.replace('\n',' '))
-df['text']=df['text'].apply(lambda x: x.replace('\t',' '))
-df['text']=df['text'].apply(lambda x: x.replace('\r',' '))
+# df['text']=df['text'].apply(lambda x: x.replace('\n',' '))
+# df['text']=df['text'].apply(lambda x: x.replace('\t',' '))
+# df['text']=df['text'].apply(lambda x: x.replace('\r',' '))
 
 chunks= get_text_chunks(df['text'].to_list()[0])
 
