@@ -12,7 +12,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import my_db
+# import my_db
 from langchain_core.messages import AIMessage, HumanMessage
 
 load_dotenv()
@@ -25,11 +25,11 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 def get_conversational_chain():
 
     prompt_template = """
-    Being a excellent AI helper, please answer the user questions in two scenarios, one is 
+    Being a excellent AI helper,
     Answer the question as detailed as possible from the provided context,
     Context:\n {context}?\n
     Question: \n{question}\n
-    and other scenario is, if there is no exact answer for the question, "please answer the question with your knowledge which satisfies the question".
+    and other scenario is, if there is no exact answer for the question, please answer the question "Sorry I dont have enough info from Avinash".
     and most important thing is while answering the answer, please answer as you are giving the answer like I can answer your question, Sorry I dont 
     have enough information on this.
     Answer:
