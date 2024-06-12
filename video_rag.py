@@ -12,6 +12,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+from langchain.memory import ConversationBufferMemory
 # import my_db
 from langchain_core.messages import AIMessage, HumanMessage
 
@@ -24,36 +25,43 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_conversational_chain():
 
-    prompt_template = """
+    prompt_template='''
 
-As an exceptional AI helper, I'm here to provide detailed answers based on the provided context. 
-If there's no exact answer available, I'll respond with "Sorry, I don't have enough information from Avinash."
+You are a highly intelligent and polite chatbot designed to assist Freedom with AI users with their queries. 
+Context:
+{context}
 
-**Context:**  
-{context}?
-
-**Question:**  
+Question:  
 {question}
 
-**Answer Guidelines:**  
-1. Greet the user only when they say Hi or Hello, reply them with "Hello,How can I help you?" 
-2. Express gratitude when users say "Thank you" or "Okay," and encourage them to reach out again if needed with "Thank you! Please don't hesitate to let me know if there's anything else I can assist you with."  
-3. Maintain a consistently polite tone throughout interactions.
-4. Provide answers in a clear and concise manner.
-5. If additional information is required to answer a question, politely ask for clarification.
-6. If the question is complex or ambiguous, break it down into smaller parts for better understanding.
-7. Avoid making assumptions and stick to the facts provided in the context.
-8. If the question involves sensitive or personal information, prioritize privacy and security.
-9. Use proper grammar and language to ensure clarity in responses.
-10. If applicable, provide examples or additional resources to further assist the user.
+Instructions to follow:  
+Politeness: Maintain a consistently polite tone throughout interactions.
+Clarity: Provide answers in a clear and concise manner.
+Clarification: If additional information is required to answer a question, politely ask for clarification.
+Complexity:If the question is complex or ambiguous, break it down into smaller parts for better understanding.
+Accuracy: Avoid making assumptions and stick to the facts provided in the context and be consistent whilew
+Privacy: If the question involves sensitive or personal information, prioritize privacy and security.
+Grammar: Use proper grammar and language to ensure clarity in responses.
+Resources: If applicable, provide examples or additional resources to further assist the user.
 
-"""
+Fallback: If there is no exact answer available based on the context, respond with "Sorry, I don't have enough information from Avinash."
 
+Fallback Scenario:
+- User: "Tell me about the upcoming features in the next software release."
+- Bot: "Sorry, I don't have enough information from Avinash."
+
+
+
+'''
 
 
     
     model = ChatGoogleGenerativeAI(model="gemini-1.5-pro-latest",
-                             temperature=0.3)
+                             temperature=0.1)
+    
+    memory = ConversationBufferMemory()
+
+# Load the QA chain with memory
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
@@ -65,8 +73,10 @@ If there's no exact answer available, I'll respond with "Sorry, I don't have eno
 def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     
-    new_db = FAISS.load_local("faiss_index", embeddings)
-    docs = new_db.similarity_search(user_question)
+    new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+    # docs = new_db.similarity_search(user_question)
+    retriever = new_db.as_retriever(search_kwargs={'k':6})
+    docs = retriever.invoke(user_question)
 
     chain = get_conversational_chain()
 
@@ -111,7 +121,7 @@ def main():
     if "vector_store" not in st.session_state:
             embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     
-            st.session_state.vector_store = FAISS.load_local("faiss_index", embeddings)
+            st.session_state.vector_store = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
 
     # get_vector_store(text_chunks)
     # st.success("Done")
@@ -135,3 +145,4 @@ def main():
         st.write(e)
 if __name__ == "__main__":
     main()
+
