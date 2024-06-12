@@ -73,7 +73,7 @@ Fallback Scenario:
 def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     
-    new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+    new_db = FAISS.load_local("faiss_index", embeddings)
     # docs = new_db.similarity_search(user_question)
     retriever = new_db.as_retriever(search_kwargs={'k':6})
     docs = retriever.invoke(user_question)
@@ -121,7 +121,7 @@ def main():
     if "vector_store" not in st.session_state:
             embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     
-            st.session_state.vector_store = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
+            st.session_state.vector_store = FAISS.load_local("faiss_index", embeddings)
 
     # get_vector_store(text_chunks)
     # st.success("Done")
