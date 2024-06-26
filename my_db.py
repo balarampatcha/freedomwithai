@@ -5,7 +5,9 @@ from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import TextLoader
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def get_text_chunks(text_documents):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=750, chunk_overlap=200)
@@ -19,7 +21,7 @@ def get_vector_store(documents):
     vector_store.save_local("faiss_index")
 
     
-loader=TextLoader("main_document.txt")
+loader=TextLoader("courses.txt")
 
 text_documents=loader.load()
 
