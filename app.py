@@ -75,7 +75,6 @@ def user_input(user_question):
     
     response = chain({"query": user_question })
 
-    print(response)
     
     return response["result"]
 
@@ -112,6 +111,6 @@ def main():
                 with st.chat_message("Human"):
                     st.write(message.content)
     except Exception as e:
-        st.write(e)
+        st.write("error in getting response. I will be back shortly!")
 if __name__ == "__main__":
     main()
