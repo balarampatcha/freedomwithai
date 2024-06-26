@@ -21,7 +21,7 @@ def get_vector_store(documents):
     vector_store.save_local("faiss_index")
 
     
-loader=TextLoader("courses.txt")
+loader=TextLoader("main_document.txt")
 
 text_documents=loader.load()
 
