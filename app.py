@@ -111,7 +111,6 @@ def main():
                 with st.chat_message("Human"):
                     st.write(message.content)
     except Exception as e:
-
         st.write("error in getting response. I will be back shortly!")
 if __name__ == "__main__":
     main()
