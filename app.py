@@ -59,7 +59,7 @@ def get_conversational_chain():
     
     qa_chain = RetrievalQA.from_chain_type(
         model,
-        retriever=new_db.as_retriever(search_kwargs={'k':12}),
+        retriever=new_db.as_retriever(search_kwargs={'k':10}),
         chain_type_kwargs={"prompt": prompt}
     )
 
