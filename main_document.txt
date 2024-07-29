@@ -497,7 +497,11 @@ I was told that the masterclass is free but why did I pay amount 499rs?
 
 ➤Fine-tuning in AI means adjusting a pre-trained model to better fit a specific task or data, like tweaking a recipe to make it taste just right for a particular dish.
 
-70.What is prompt engineering in brief?
+
+70.Whom should I connect for any support?
+➤ Kundan:70320 31038 number and email : support@freedomwithai.com
+
+71.What is prompt engineering in brief?
 
 ➤Prompt engineering means creating clear and specific instructions for AI so it can give the right answers or do the right tasks. It's like giving the AI a good map to follow so it knows where to go and what to do.
 71.How does AI impact :

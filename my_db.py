@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_text_chunks(text_documents):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=750, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=3000, chunk_overlap=500)
     documents = text_splitter.split_documents(text_documents)
     return documents
 
@@ -21,7 +21,7 @@ def get_vector_store(documents):
     vector_store.save_local("faiss_index")
 
     
-loader=TextLoader("main_document.txt")
+loader=TextLoader("ex1.txt")
 
 text_documents=loader.load()
 
