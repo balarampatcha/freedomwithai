@@ -40,6 +40,6 @@ def update_faiss_index(
 update_faiss_index(
     index_path='faiss_index',
     new_index_path='faiss_index',
-    text_file_path='new data text file path',
+    text_file_path='data/',
     api_key=os.getenv("OPENAI_API_KEY")
 )
